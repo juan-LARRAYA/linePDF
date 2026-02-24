@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(npm.cmd:*)",
+      "Bash(npx:*)",
+      "Bash(npx.cmd:*)",
+      "Bash(expo:*)",
+      "Bash(expo.cmd:*)",
+      "Bash(node -e:*)"
+    ]
+  }
+}
