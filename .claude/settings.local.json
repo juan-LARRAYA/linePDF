@@ -10,7 +10,10 @@
       "Bash(npx.cmd:*)",
       "Bash(expo:*)",
       "Bash(expo.cmd:*)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "Bash(eas build:view:*)",
+      "Bash(eas build:logs:*)",
+      "Bash(ls:*)"
     ]
   }
 }

@@ -1,11 +1,5 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-} from 'react-native-reanimated';
+import React, { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 
@@ -16,23 +10,20 @@ interface Props {
 }
 
 export function ReaderOverlay({ visible, currentPage, totalPages }: Props) {
-  const opacity = useSharedValue(0);
+  const opacity = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    opacity.value = withTiming(visible ? 1 : 0, {
+    Animated.timing(opacity, {
+      toValue: visible ? 1 : 0,
       duration: 200,
-      easing: Easing.inOut(Easing.ease),
-    });
+      useNativeDriver: true,
+    }).start();
   }, [visible, opacity]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value,
-  }));
 
   return (
     <Animated.View
-      style={[styles.container, animatedStyle]}
+      style={[styles.container, { opacity }]}
       pointerEvents={visible ? 'box-none' : 'none'}
     >
       {/* Top bar */}
@@ -85,6 +76,5 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.7)',
     fontSize: 13,
     letterSpacing: 1,
-    fontVariant: ['tabular-nums'],
   },
 });

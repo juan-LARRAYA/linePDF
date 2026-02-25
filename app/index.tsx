@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import {
   Alert,
   FlatList,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -31,7 +32,10 @@ export default function LibraryScreen() {
       const asset = result.assets[0];
       const filename = asset.name ?? `documento_${Date.now()}.pdf`;
 
-      const permanentUri = await copyPdfToStorage(asset.uri, filename);
+      // En web expo-file-system no está disponible, usamos la URI directamente
+      const permanentUri = Platform.OS === 'web'
+        ? asset.uri
+        : await copyPdfToStorage(asset.uri, filename);
 
       const entry: PDFEntry = {
         uri: permanentUri,
